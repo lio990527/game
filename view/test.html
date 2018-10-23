@@ -1,0 +1,26 @@
+<script type="text/javascript">
+shuffle = function(){
+	var x = 2,y = 3;	
+	var hold = 0;
+	var i;
+	var ri = new Array(15);
+	var tileArray = [];
+	for (i=0; i < x*y; i++){
+		ri[i] = i;
+		tileArray[i] = i;
+	}
+	for(var j=0; j<y; j++){
+		ri.sort(function(){
+			return Math.random()-0.5;
+		});
+		for (i=0; i < x*y; i+=y){
+			hold = tileArray[ri[i]];
+			tileArray[ri[i]] = tileArray[ri[i+1]];
+			tileArray[ri[i+1]] = tileArray[ri[i+2]];
+			tileArray[ri[i+2]] = hold;
+		}
+	}
+	document.write(tileArray);
+}
+onload = shuffle;
+</script>

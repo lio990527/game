@@ -1,0 +1,322 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!-- saved from url=(0077)http://microphp.us/plugins/public/microphp_res/simple_html_dom/manual_api.htm -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<title>PHP Simple HTML DOM Parser: API 中文参考手�?_by:狂奔的蜗�?/title>
+<link href="./PHP Simple HTML DOM Parser_ API 中文参考手�?_by_狂奔的蜗牛_files/default.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<h1><a name="top"></a>PHP Simple HTML DOM Parser 中文参考手�?/h1>
+<div id="content">
+  <h2>目录</h2>
+  <ul>
+    <li><a href="http://microphp.us/plugins/public/microphp_res/simple_html_dom/manual.htm">返回</a></li>
+    <li><a href="http://microphp.us/plugins/public/microphp_res/simple_html_dom/manual_api.htm#api">API 参�?/a></li>
+    <li><a href="http://microphp.us/plugins/public/microphp_res/simple_html_dom/manual_api.htm#camel">驼峰命名</a></li>
+  </ul>
+  <a name="api"></a>
+  <h2>API 参�?/h2>
+  <a class="top" href="http://microphp.us/plugins/public/microphp_res/simple_html_dom/manual_api.htm#top">回顶�?/a>
+  <div class="code"> <strong>快捷函数</strong> 
+    <table width="100%" cellpadding="1" cellspacing="1">
+      <tbody><tr>
+        <th width="320">名称</th>
+        <th>描述</th>
+      </tr>
+      <tr>
+        <td><span class="returns">object</span> str_get_html ( <span class="var">string $content</span> )</td>
+        <td class="description">从字符串创建DOM对象</td>
+      </tr>
+      <tr>
+        <td><span class="returns">object</span> file_get_html ( <span class="var">string $filename</span> )</td>
+        <td class="description">从URL或者文件创建DOM</td>
+      </tr>
+    </tbody></table>
+    <br>
+    <strong>DOM</strong> 方法�?&amp; 属�?<br>
+    <table width="100%" cellpadding="1" cellspacing="1">
+      <tbody><tr>
+        <th width="320"> 名称</th>
+        <th> 描述</th>
+      </tr>
+      <tr>
+          <td>
+              <div class="returns">void</div>
+              __construct ( <span class="var">[string $filename]</span> )</td>
+          <td class="description">构造方�? 参数可以是文件名、URL、HTML字符串，或者不传参数�?/td>
+      </tr>
+      <tr>
+        <td>
+          <div class="returns">string</div>
+          plaintext</td>
+        <td class="description">返回提取的HTML文本内容.</td>
+      </tr>
+      <tr>
+        <td>
+          <div class="returns">void</div>
+          clear ()</td>
+        <td class="description">释放对象占用的内�?/td>
+      </tr>
+      <tr>
+        <td>
+          <div class="returns">void</div>
+          load ( <span class="var">string $content </span>)</td>
+        <td class="description"> 加载字符串用于解�?/td>
+      </tr>
+      <tr>
+        <td>
+          <div class="returns">string</div>
+          save ( <span class="var">[string $filename]</span> )</td>
+        <td class="description">返回内部DOM树的字符串，如果传递了文件名参数，将把内部DOM树的字符串存储到文件</td>
+      </tr>
+      <tr>
+        <td>
+          <div class="returns">void</div>
+          load_file (<span class="var"> string $filename</span> )</td>
+        <td class="description">加载一个文件或者URL内容用于解析</td>
+      </tr>
+      <tr>
+        <td>
+          <div class="returns">void</div>
+          set_callback ( <span class="var">string $function_name </span>)</td>
+        <td class="description">设置回调函数 </td>
+      </tr>
+      <tr>
+        <td>
+          <div class="returns">mixed</div>
+          find (<span class="var"> string $selector [, int $index] </span>)</td>
+        <td class="description">使用css选择器查找一组元�?第二个参数是数组索引，从0开始�?br>没有第二个参数返回的是找的所有元素的数组，如果传递了第二个参数返回数组中索引位置的元素对象�?/td>
+      </tr>
+    </tbody></table>
+    <br>
+    <strong>Element元素</strong> 方法 &amp; 属�?<br>
+    <table width="100%" cellpadding="1" cellspacing="1">
+      <tbody><tr>
+        <th width="320">名称</th>
+        <th>描述</th>
+      </tr>
+      <tr>
+        <td>
+          <div class="returns">string</div>
+          <span class="var">[attribute]</span></td>
+        <td class="description">获取或者设置元素的属性�?</td>
+      </tr>
+      <tr>
+        <td>
+          <div class="returns">string</div>
+          tag</td>
+        <td class="description">获取或者设置元素的标签�?/td>
+      </tr>
+      <tr>
+        <td>
+          <div class="returns">string</div>
+          outertext</td>
+        <td class="description">获取或者设置元素的 outer HTML</td>
+      </tr>
+      <tr>
+        <td>
+          <div class="returns">string</div>
+          innertext</td>
+        <td class="description">获取或者设置元素的 inner HTML</td>
+      </tr>
+      <tr>
+        <td>
+          <div class="returns">string</div>
+          plaintext</td>
+        <td class="description">获取或者设置元素的纯文�?/td>
+      </tr>
+      <tr>
+        <td>
+          <div class="returns">mixed</div>
+          find (<span class="var"> string $selector [, int $index] </span>)</td>
+        <td class="description">使用css选择器查找一组元�?第二个参数是数组索引，从0开始�?br>没有第二个参数返回的是找的所有元素的数组，如果传递了第二个参数返回数组中索引位置的元素对象�?/td>
+      </tr>
+    </tbody></table>
+    <strong><br>
+    DOM</strong> 遍历<br>
+    <table width="100%" cellpadding="1" cellspacing="1">
+      <tbody><tr>
+        <th width="320">名称</th>
+        <th>描述</th>
+      </tr>
+      <tr>
+        <td>
+          <div class="returns">mixed</div>
+          $e-&gt;children ( <span class="var">[int $index]</span> ) </td>
+        <td class="description">无参数时返回所有的后代元素数组，参数是具体后代元素数组的索引，如果传递了索引参数那么返回的是一个DOM对象而不是数组�?/td>
+      </tr>
+      <tr>
+        <td>
+          <div class="returns">element</div>
+          $e-&gt;parent () </td>
+        <td class="description">返回父元�?</td>
+      </tr>
+      <tr>
+        <td>
+          <div class="returns">element</div>
+          $e-&gt;first_child () </td>
+        <td class="description">返回第一个子元素，不存在就返回null</td>
+      </tr>
+      <tr>
+        <td>
+          <div class="returns">element</div>
+          $e-&gt;last_child () </td>
+        <td class="description">返回最后一个子元素，不存在就返回null</td>
+      </tr>
+      <tr>
+        <td>
+          <div class="returns">element</div>
+          $e-&gt;next_sibling () </td>
+        <td class="description">返回下一个同级元素，不存在就返回null</td>
+      </tr>
+      <tr>
+        <td>
+          <div class="returns">element</div>
+          $e-&gt;prev_sibling () </td>
+        <td class="description">返回上一个同级元素，不存在就返回null</td>
+      </tr>
+    </tbody></table>
+  </div>
+  <a name="camel"></a>
+  <h2>驼峰命名的方�?/h2>
+  <a class="top" href="http://microphp.us/plugins/public/microphp_res/simple_html_dom/manual_api.htm#top">回顶�?/a>
+  <div class="code">你也可以使用标准的W3C驼峰命名方法.<br>
+    <br>
+    <table width="100%" cellpadding="1" cellspacing="1">
+      <tbody><tr>
+        <th width="50%">驼峰命名的方�?/th>
+        <th>对应的等效方�?/th>
+      </tr>
+      <tr bgcolor="#EEEEEE">
+          <td>
+              <div class="returns">array</div>
+              $e-&gt;getAllAttributes () </td>
+          <td>
+              <div class="returns">array</div>
+              $e-&gt;<span class="var">attr</span></td>
+      </tr>
+      <tr bgcolor="#EEEEEE">
+        <td>
+          <div class="returns">string</div>
+          $e-&gt;getAttribute ( <span class="var">$name</span> ) </td>
+        <td>
+          <div class="returns">string</div>
+          $e-&gt;<span class="var">attribute</span></td>
+      </tr>
+      <tr bgcolor="#EEEEEE">
+        <td>
+          <div class="returns">void</div>
+          $e-&gt;setAttribute ( <span class="var">$name, $value</span> ) </td>
+        <td>
+          <div class="returns">void</div>
+          $value = $e-&gt;<span class="var">attribute</span></td>
+      </tr>
+      <tr bgcolor="#EEEEEE">
+        <td>
+          <div class="returns">bool</div>
+          $e-&gt;hasAttribute ( <span class="var">$name</span> ) </td>
+        <td>
+          <div class="returns">bool</div>
+          isset($e-&gt;<span class="var">attribute</span>)</td>
+      </tr>
+      <tr bgcolor="#EEEEEE">
+        <td>
+          <div class="returns">void</div>
+          $e-&gt;removeAttribute ( <span class="var">$name</span> ) </td>
+        <td>
+          <div class="returns">void</div>
+          $e-&gt;<span class="var">attribute</span> = null</td>
+      </tr>
+      <tr bgcolor="#EEEEEE">
+        <td>
+          <div class="returns">element</div>
+          $e-&gt;getElementById ( <span class="var">$id</span> ) </td>
+        <td>
+          <div class="returns">mixed</div>
+          $e-&gt;find (<span class="var"> "#$id", 0 </span>)</td>
+      </tr>
+      <tr bgcolor="#EEEEEE">
+        <td>
+          <div class="returns">mixed</div>
+          $e-&gt;getElementsById ( <span class="var">$id [,$index] </span> ) </td>
+        <td>
+          <div class="returns">mixed</div>
+          $e-&gt;find (<span class="var"> "#$id" [, int $index] </span>)</td>
+      </tr>
+      <tr bgcolor="#EEEEEE">
+        <td>
+          <div class="returns">element</div>
+          $e-&gt;getElementByTagName (<span class="var">$name</span> ) </td>
+        <td>
+          <div class="returns">mixed</div>
+          $e-&gt;find (<span class="var"> $name, 0 </span>)</td>
+      </tr>
+      <tr bgcolor="#EEEEEE">
+        <td>
+          <div class="returns">mixed</div>
+          $e-&gt;getElementsByTagName ( <span class="var">$name [, $index]</span> ) </td>
+        <td>
+          <div class="returns">mixed</div>
+          $e-&gt;find (<span class="var"> $name [, int $index] </span>)</td>
+      </tr>
+      <tr bgcolor="#EEEEEE">
+        <td>
+          <div class="returns">element</div>
+          $e-&gt;parentNode () </td>
+        <td>
+          <div class="returns">element</div>
+          $e-&gt;parent () </td>
+      </tr>
+      <tr bgcolor="#EEEEEE">
+        <td>
+          <div class="returns">mixed</div>
+          $e-&gt;childNodes ( <span class="var">[$index]</span> ) </td>
+        <td>
+          <div class="returns">mixed</div>
+          $e-&gt;children ( <span class="var">[int $index]</span> ) </td>
+      </tr>
+      <tr bgcolor="#EEEEEE">
+        <td>
+          <div class="returns">element</div>
+          $e-&gt;firstChild () </td>
+        <td>
+          <div class="returns">element</div>
+          $e-&gt;first_child () </td>
+      </tr>
+      <tr bgcolor="#EEEEEE">
+        <td>
+          <div class="returns">element</div>
+          $e-&gt;lastChild () </td>
+        <td>
+          <div class="returns">element</div>
+          $e-&gt;last_child () </td>
+      </tr>
+      <tr bgcolor="#EEEEEE">
+        <td>
+          <div class="returns">element</div>
+          $e-&gt;nextSibling () </td>
+        <td>
+          <div class="returns">element</div>
+          $e-&gt;next_sibling () </td>
+      </tr>
+      <tr bgcolor="#EEEEEE">
+        <td>
+          <div class="returns">element</div>
+          $e-&gt;previousSibling () </td>
+        <td>
+          <div class="returns">element</div>
+          $e-&gt;prev_sibling () </td>
+      </tr>
+    </tbody></table>
+  </div>
+  <div><br>
+    Author: S.C. Chen (me578022@gmail.com)<br>
+Original idea is from Jose Solorzano's <a href="http://php-html.sourceforge.net/">HTML Parser for PHP 4</a>. <br>
+Contributions by: Contributions by: Yousuke Kumakura, Vadim Voituk, Antcs<br>
+  </div>
+</div>
+<script src="./PHP Simple HTML DOM Parser_ API 中文参考手�?_by_狂奔的蜗牛_files/microphp.php"></script><script src="./PHP Simple HTML DOM Parser_ API 中文参考手�?_by_狂奔的蜗牛_files/h.js" type="text/javascript"></script><a href="http://tongji.baidu.com/hm-web/welcome/ico?s=25dc3c6d2187c5da81c6269c209aa726" target="_blank"><img border="0" src="./PHP Simple HTML DOM Parser_ API 中文参考手�?_by_狂奔的蜗牛_files/21.gif" width="20" height="20"></a>
+
+
+<!--$Rev: 165 $-->
+</body></html>

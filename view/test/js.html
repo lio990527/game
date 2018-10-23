@@ -1,0 +1,80 @@
+<html>
+<script type="text" id="template">
+	<h1>aaaaaaaa</h1>
+</script>
+<script type="text/javascript">
+
+//document.body.contentEditable='true';
+if (window.location != window.parent.location){ 
+	window.parent.location = window.location;
+}
+
+var a=1,b=2;a=[b,b=a][0];
+console.log('a:'+a+',b:'+b);
+console.table([b,b=a]);
+
+var foo = (12.4 / 4.13) | 0;//½á¹ûÎª3
+var bar = ~~(12.4 / 4.13);
+console.log('foo:'+foo+',bar:'+bar);
+
+function generateRandomAlphaNum(len) {
+    var rdmString = "";
+    for (; rdmString.length < len; rdmString += Math.random().toString(36).substr(2));
+    return rdmString.substr(0, len);
+}
+console.log(generateRandomAlphaNum(12));
+
+
+var text = document.getElementById('template').innerHTML
+console.log(text);
+
+function parseURL(url) {
+    var a =  document.createElement('a');
+    a.href = url;
+    return {
+        source: url,
+        protocol: a.protocol.replace(':',''),
+        host: a.hostname,
+        port: a.port,
+        query: a.search,
+        params: (function(){
+            var ret = {},
+                seg = a.search.replace(/^\?/,'').split('&'),
+                len = seg.length, i = 0, s;
+            for (;i<len;i++) {
+                if (!seg[i]) { continue; }
+                s = seg[i].split('=');
+                ret[s[0]] = s[1];
+            }
+            return ret;
+        })(),
+        file: (a.pathname.match(/\/([^\/?#]+)$/i) || [,''])[1],
+        hash: a.hash.replace('#',''),
+        path: a.pathname.replace(/^([^\/])/,'/$1'),
+        relative: (a.href.match(/tps?:\/\/[^\/]+(.+)/) || [,''])[1],
+        segments: a.pathname.replace(/^\//,'').split('/')
+    };
+}
+
+console.log(parseURL('http://www.tieyou.com'));
+
+var a = document.createElement('a');
+a.href = 'http://bus.tieyou.com/';
+console.log(a.host);
+
+onload = function(){
+	var info = "tasd:"+'213'+"\n";
+		info+= '\n\txzc:'+'314'+"\n";
+	alert(info);
+}
+</script>
+<style type="text/css">
+p {
+    color: transparent;
+    text-shadow: #111 0 0 5px;
+}
+</style>
+<body>
+	<p>test</p>
+</body>
+</html>

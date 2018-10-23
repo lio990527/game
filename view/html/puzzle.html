@@ -1,0 +1,53 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>HTML5 拼图</title>
+<script type="text/javascript" src="/source/js/puzzle.js"></script>
+<script type="text/javascript">
+	function doubulemove(){
+		
+		for(var i=0;i<2;i++){
+			if(i==0){
+				move(aimg,200);
+			}else{
+				move(bimg,200);
+			}
+		}
+	}
+	function move(dom,times){
+		//alert(dom.style.top);
+		//alert(dom.style.left);
+		var i = 0;
+		var top = dom.offsetTop;
+		var left= dom.offsetLeft;
+		var timer = setInterval(function(){
+			var o = parseInt(Math.random()*10);
+			if(o%4 == 0){
+				dom.style.top=(top-i)+'px';
+			}else if(o%4 == 1){
+				dom.style.top=(top+i)+'px';
+			}else if(o%4 == 2){
+				dom.style.left=(left-i)+'px';
+			}else if(o%4 == 3){
+				dom.style.left=(left+i)+'px';
+			}
+			i=i+1;
+			if(i>times){
+				dom.style.top  =(top)+'px';
+				dom.style.left =(left)+'px';
+				clearTimeout(timer);
+			}
+		},1);
+		
+	}
+</script>
+</head>
+
+
+<body>
+<div id="content" alt="images.png"><img src="/source/image/images.png" class="puzzle"/><img src="/source/image/heishitong.jpg" width="200" height="200" class="puzzle"/><img src="/source/image/j.jpg" class="puzzle"/></div>
+<div onclick="doubulemove()" id="aimg" style="top:550px;left:300px;width:50px;height:50px;background-color:#AAA;position:absolute;">1</div>
+<div onclick="doubulemove()" id="bimg" style="top:600px;width:40px;left:300px;height:40px;background-color:#AA0;position:absolute;">2</div>
+</body>
+</html>
