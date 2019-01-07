@@ -4,85 +4,81 @@
 //火子
 //2014-05-20
 /////////////
-function Puzzle(divId, img){
-	this.divId = divId;
-	this.width = img.width;
-	this.height = img.height;
-	this.src = img.src;
-	this.className = img.className;
+function Puzzle(img){
 	this.initialImg = img;
-	this.initialDiv = [];
-	this.initialId  = [];
-	this.emptyIndex = 0;
-	this.rows = 0;
-	this.cols = 0;
-	this.m = .5;
-	this.p = 2;
+	this.rows = 3;
+	this.cols = 3;
+	this.margin = .5;
+	this.speed = 2;
 }
-  
+
 Puzzle.prototype = {
 	constructor : Puzzle,
 	
-	loadPuzzle : function(){
+	loadPuzzle : function(option = {}){
 		var self = this;
+		var width = this.initialImg.width;
+		var height = this.initialImg.height;
+		var divId = 'puzzel_' + parseInt(Math.random() * 100);
 		var puDiv = document.createElement('div');
-			puDiv.id = self.divId;
-			puDiv.alt = self.src;
-			puDiv.className = self.className;
-			puDiv.style.width  = self.width+'px';
-			puDiv.style.height = self.height+'px';
+			puDiv.id = divId;
+			puDiv.className = this.initialImg.className;
+			puDiv.style.width  = width+'px';
+			puDiv.style.height = height+'px';
 			puDiv.style.display = 'inline-block';
 			puDiv.style.position = 'relative';
-			
-		var size,count, w, h;
-		size = self.switchSize();
-		this.rows = Math.ceil(self.width/size);
-		this.cols = Math.ceil(self.height/size);
-		count = this.rows * this.cols;
-		w = parseInt(self.width/this.rows - 2);
-		h = parseInt(self.height/this.cols - 2);
+
+		this.div = puDiv;
+		this.rows = option.rows || this.rows;
+		this.cols = option.cols || this.cols;
+		this.margin = option.margin || this.margin;
+		this.speed = option.speed || this.speed;
+		this.initialDiv = [];
+		this.initialId = [];
+		var count = this.rows * this.cols;
+		var w = parseInt(width / this.rows - this.margin * 2);
+		var h = parseInt(height / this.cols - this.margin * 2);
 
 		for(var i = 0; i < count; i++){
-			var x = -parseInt(i%this.rows)*(w+this.m*2)-1;
-			var y = -parseInt(i/this.rows)*(h+this.m*2)-1;
+			var x = -parseInt(i % this.rows) * (w + this.margin * 2) - 1;
+			var y = -parseInt(i / this.rows) * (h + this.margin * 2) - 1;
 
 			var divPic = document.createElement('div');
-			divPic.id = self.divId+'_'+i;
+			divPic.id = divId + i;
 			divPic.style.width = w+'px';
 			divPic.style.height = h+'px';
-			divPic.style.margin = this.m+'px';
+			divPic.style.margin = this.margin+'px';
 
 			divPic.style.float = 'left';
 			divPic.style.cssFloat = 'left';
 			divPic.style.overflow = 'hidden';
 			if(i != count - 1){
-				divPic.style.backgroundImage = 'url('+self.src+')';
+				divPic.style.backgroundImage = 'url('+this.initialImg.src+')';
 				divPic.style.backgroundPosition = x+'px '+y+'px';
 			}
-			// 
+
 			divPic.onclick = function(){self.move(this);};
 			divPic.ondblclick = function(){if(confirm('Give Up???'))self.regain();};
 								
-			self.initialDiv[i] = divPic;
-			self.initialId[i]  = divPic.id;
+			this.initialDiv[i] = divPic;
+			this.initialId[i]  = divPic.id;
 		}
-		
-		var array = self.rand(count);
-		
+
+		var array = this.rand(count);
 		for(i in array){
 			var index = array[i];
-			if(!self.initialDiv[index].style.backgroundImage){
-				self.emptyIndex = parseInt(i);
+			if(!this.initialDiv[index].style.backgroundImage){
+				this.emptyIndex = parseInt(i);
 			}
-			puDiv.appendChild(self.initialDiv[index]);
+			puDiv.appendChild(this.initialDiv[index]);
 		}
 
 		puDiv.onclick = function(){return false;};
-		self.initialImg.parentNode.replaceChild(puDiv, self.initialImg);
+		this.initialImg.parentNode.replaceChild(puDiv, this.initialImg);
 	},
 	//检索是否拼图完成
 	checkSuccess : function(){
-		var ids = document.getElementById(this.divId).getElementsByTagName('div');
+		var ids = this.div.getElementsByTagName('div');
 		for(var k = 0; k < ids.length; k++){
 			if(this.initialId[k] != ids[k].id){
 				return false;
@@ -113,9 +109,9 @@ Puzzle.prototype = {
 			var positions = Math.abs(this.emptyIndex - index) == 1 ? 'left' : 'top';	//判断横纵向移动
 			var clon = dom.cloneNode();
 			var empty = nodes[this.emptyIndex];
-			clon.style.position = 'absolute';
 			clon.zIndex = '9999';
 			clon.style.margin = 0;
+			clon.style.position = 'absolute';
 			clon.style.left = dom.offsetLeft + 'px';
 			clon.style.top = dom.offsetTop + 'px';
 			dom.id = empty.id;
@@ -123,14 +119,10 @@ Puzzle.prototype = {
 			dom.parentNode.appendChild(clon);
 			this.emptyIndex = index;
 			var i = 0;
-			var offset = positions == 'top' ? clon.offsetTop : clon.offsetLeft;
+			var offset = (positions == 'top') ? clon.offsetTop : clon.offsetLeft;
 			var self = this;
 			var timer = setInterval(function(){
-				if(positions == 'top'){
-					clon.style.top = (offset + pixel*i) + 'px';
-				}else{
-					clon.style.left = (offset + pixel*i) + 'px';
-				}
+				clon.style[positions] = (offset + pixel * i) + 'px'
 				if((positions == 'left' && i > clon.offsetWidth) || (positions == 'top' && i > clon.offsetHeight)){
 					clearTimeout(timer);
 					empty.style.backgroundImage = clon.style.backgroundImage;
@@ -139,32 +131,16 @@ Puzzle.prototype = {
 					dom.parentNode.removeChild(clon);
 					self.checkSuccess();
 				}
-				i = i + self.p;
-			},1);
+				i = i + self.speed;
+			}, 1);
 		}
 		return true;
 	},
 	
 	regain : function(){
-		var puDiv = document.getElementById(this.divId);
-		puDiv.parentNode.replaceChild(this.initialImg, puDiv);
+		this.div.parentNode.replaceChild(this.initialImg, this.div);
 	},
-	
-	switchSize : function(){
-		var size = (this.width < this.height) ? this.width : this.height; 
-		if(size <= 100){
-			return 40;
-		}else if(size > 100 && size <= 200){
-			return 80;
-		}else if(size > 200 && size <= 300){
-			return 100;
-		}else if(size > 300 && size <= 400){
-			return 150;
-		}else{
-			return parseInt(size/3);
-		}
-	},
-	
+
 	rand : function(num){
 		num = parseInt(num);
 		var r;
@@ -173,12 +149,12 @@ Puzzle.prototype = {
 			var a = [];
 			var i = 0,o = 0;
 			while(i < num - 1){
-			    var t = parseInt(Math.random()*(num - 1));
-			    if(a[t] == undefined){
-			        a[t] = true;
-			        r.push(t);
-			        i++;
-			    }
+				var t = parseInt(Math.random()*(num - 1));
+				if(a[t] == undefined){
+					a[t] = true;
+					r.push(t);
+					i++;
+				}
 			}
 			for(var i = 0; i < r.length - 1; i++){
 				for(var j = i+1; j < r.length; j++){
@@ -195,24 +171,19 @@ Puzzle.prototype = {
 	
 };
 
-onload = function(){
-	var puzzle_style =  document.createElement('style');
-	puzzle_style.type = 'text/css';
-//	puzzle_style.innerHTML = ''; 
-//	document.head.appendChild(puzzle_style);
-
+window.addEventListener('load', function(){
 	var Domimgs = document.getElementsByTagName('img');
 	for(var index = 0; index < Domimgs.length; index++){
 		if(Domimgs[index].width > 100 && Domimgs[index].height > 80 && Domimgs[index].className.indexOf('puzzle') != -1){
 			var image = Domimgs[index];
-			if(image.id == '' || image.id == undefined){
-				image.id = 'Puzzle_div_'+index;
-			}
-
 			image.ondblclick = function(){
-				new Puzzle(this.id, this).loadPuzzle();
+				new Puzzle(this).loadPuzzle();
 			};
 			image.onclick = function(){return false;};
 		}
 	}
-};
+});
+
+HTMLImageElement.prototype.puzzle = function(){
+	return new Puzzle(this);
+}
