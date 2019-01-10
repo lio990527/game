@@ -1,0 +1,122 @@
+<html>
+
+<head>
+<title>VUE test</title>
+<style type="text/css">
+	.b{font-weight:bold;}
+	.i{font-style:italic;}
+	.u{text-decoration:underline;}
+</style>
+<script type="text/javascript" src="/source/js/vue.js"></script>
+</head>
+<body>
+	<div id="vuee">
+		<h3 v-once>{{sayMsg}} <i v-if="status">~</i><i v-else v-html="code"></i></h3>
+		<button v-on:click="toggle">toggle</button><br/>
+		<template v-if="status">
+			<label>phone:</label>
+			<input name="user" placeholder="enter your phone here" key="phone"/><br/>
+			<label>pass:</label>
+			<input name="pass" type="password"/>
+		</template>
+		<template v-else>
+			<label>email:</label>
+			<input name="user" placeholder="enter your email here" key="email"/><br/>
+			<label>pass:</label>
+			<input name="pass" type="password"/>
+		</template>
+		<br/>
+		<select v-model="style" :title="styleName">
+			<option v-for="(value, name, index) in styles" :name="index+'.'+name" :value="value" :key="index" is="option-item"></option>
+		</select>
+		<button v-on:click="addNode" :style="big">+</button>
+		<ul>
+			<li-item v-for="name in list" :text="name" :key="name" v-bind:class="[style, {error:status}]"></li-item>
+		</ul>
+		<p v-show="status">footer</p>
+	</div>
+</body>
+
+<script type="text/javascript">
+	Vue.component('option-item', {
+		props: ['name', 'value'],
+		template:'<option v-bind:value="value">{{name}}</option>'
+	});
+	Vue.component('li-item', {
+		props: ['text'],
+		template:'<li>{{text}}</li>'
+	});
+	var ss = {
+		nomal:'',
+		blod:'b',
+		italic:'i',
+		underline:'u'
+	};
+	
+	var test = new Vue({
+		el: '#vuee',
+		data:{
+			msg:'hello vue!',
+			code:'<font color="red">1001</font>',
+			status:false,
+			style:'',
+			sname:'',
+			list:[
+				'name1',
+				'n2',
+				'a3',
+				'e4'
+			],
+			big : {
+				fontSize:'14px',
+				fontWeight:'bold',
+				border:'2px solid #CCC'
+			},
+			styles: ss
+		},
+		
+		computed: {
+			sayMsg: function(){
+				return 'Say:' + this.msg;
+			},
+
+			styleName: {
+				get: function(){
+					return 'style:' + this.sname;
+				},
+				set: function(value){
+					for(var key in this.styles){
+						if(key == value){
+							this.style = this.styles[key];
+						}
+					}
+				}
+			}
+		},
+		
+		watch:{
+			style: function(val){
+				for(var key in this.styles){
+					if(this.styles[key] == val){
+						this.sname = key;
+					}
+				}
+			}
+		},
+		
+		methods: {
+			addNode: function(){
+				var newname = 'name_' + this.list.length;
+				this.list.push(newname);
+			},
+			toggle: function(){
+				this.status = this.status ? false: true;
+			},
+		}
+	});
+	
+	test.styleName = 'blod';
+	test.msg = 'hoho ppt~';
+	test.status = true;
+</script>
+</html>
