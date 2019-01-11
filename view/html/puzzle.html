@@ -2,52 +2,101 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>HTML5 拼图</title>
-<script type="text/javascript" src="/source/js/puzzle.js"></script>
+<title>拼图</title>
+<script type="text/javascript" src="/source/js/puzzle-v2.0.js"></script>
+</head>
+<style type="text/css">
+button#begin,#giveup,#reload,#type{
+	float:right;
+}
+
+#content{
+	width:345px;
+	height:345px;
+	border: 2px solid #aaa;
+	margin:0 auto;
+	padding: 5px;
+	position: relative;
+	cursor: default;
+}
+
+#header,#timer{
+	width:363px;
+	height:25px;
+	margin:0px auto;
+	margin-top:50px;
+}
+
+.over{background:#FF0000;filter:alpha(opacity=50);-moz-opacity:0.5;opacity: 0.6;}
+.overline{background:#FFF;filter:alpha(opacity=50);-moz-opacity:0.5;opacity: 0.8;}
+.out{}
+
+</style>
 <script type="text/javascript">
-	function doubulemove(){
+	var p;
+	var img;
+	var timer;
+	var timeval;
+	
+	function begin(){
+		clearInterval(timer);
+		document.getElementById('header').style.display = 'none';
+		document.getElementById('timer' ).style.display = 'block';
 		
-		for(var i=0;i<2;i++){
-			if(i==0){
-				move(aimg,200);
-			}else{
-				move(bimg,200);
-			}
-		}
+		timeval = document.getElementById('timeval');
+		timeval.value = '00:00:00.0';
+		timeval.title = 0;
+		timer = setInterval(function(){
+			var valtime = parseInt(timeval.title) + 1;
+			
+			var s,m,h;
+			h = parseInt(valtime/10/3600);
+			m = parseInt(valtime/10%3600/60);
+			s = parseInt(valtime/10%3600%60);
+			h = (h < 10) ? '0'+h : h;
+			m = (m < 10) ? '0'+m : m;
+			s = (s < 10) ? '0'+s : s;
+			timeval.value = (h+':'+m+':'+s+'.'+valtime%10);
+			timeval.title = valtime;
+		}, 100);
+
+		img = document.getElementById('images');
+		p = new Puzzle(img.id, img.width, img.height, img.src, img.className);
+		p.loadPuzzle();
+		console.log(p);
 	}
-	function move(dom,times){
-		//alert(dom.style.top);
-		//alert(dom.style.left);
-		var i = 0;
-		var top = dom.offsetTop;
-		var left= dom.offsetLeft;
-		var timer = setInterval(function(){
-			var o = parseInt(Math.random()*10);
-			if(o%4 == 0){
-				dom.style.top=(top-i)+'px';
-			}else if(o%4 == 1){
-				dom.style.top=(top+i)+'px';
-			}else if(o%4 == 2){
-				dom.style.left=(left-i)+'px';
-			}else if(o%4 == 3){
-				dom.style.left=(left+i)+'px';
-			}
-			i=i+1;
-			if(i>times){
-				dom.style.top  =(top)+'px';
-				dom.style.left =(left)+'px';
-				clearTimeout(timer);
-			}
-		},1);
-		
+	
+	function reload(){
+		timeval.value = '00:00:00.0';
+		timeval.title = 0;
+		p.regain();
+		p.loadPuzzle();
+	}
+	
+	function giveup(){
+		clearInterval(timer);
+		document.getElementById('header').style.display = 'block';
+		document.getElementById('timer' ).style.display = 'none';
+		p.regain();
+	}
+	
+	function checkVal(url){
+		img.src = url;
+		p.regain();
 	}
 </script>
-</head>
-
 
 <body>
-<div id="content" alt="images.png"><img src="/source/image/images.png" class="puzzle"/><img src="/source/image/heishitong.jpg" width="200" height="200" class="puzzle"/><img src="/source/image/j.jpg" class="puzzle"/></div>
-<div onclick="doubulemove()" id="aimg" style="top:550px;left:300px;width:50px;height:50px;background-color:#AAA;position:absolute;">1</div>
-<div onclick="doubulemove()" id="bimg" style="top:600px;width:40px;left:300px;height:40px;background-color:#AA0;position:absolute;">2</div>
+<h3 align="center">拼图</h3>
+<div id="header">
+	URL:<input id="imgUrl"  type="text" onblur="checkVal(this.value)" style="width:280px"/>
+	<button id="begin" onclick="begin()">开始</button>
+</div>
+<div id="timer" style="display:none;">
+	<input value="00:00:00.0" id="timeval" readonly/>
+	<button id="giveup" onclick="giveup()">放弃</button>
+	<button id="reload" onclick="reload()">重试</button>
+</div>
+<div id="content"><img id="images" src="/source/image/images.png"/></div>
 </body>
 </html>
