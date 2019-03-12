@@ -1,13 +1,15 @@
 <html>
 <head>
-	<script type="text/javascript" src="/source/js/pixelate.js?11"></script>
-
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<script type="text/javascript" src="/source/js/pixelate.js?1q"></script>
+	<script type="text/javascript" src="/source/js/Vanilla-v1.0.js" charset="UTF-8"></script>
 </head>
 <body>
+	<input id="file" type="file" onchange="upload()"/><br/>
 	<img id="gxr" src="/source/image/heishitong.jpg"/>
 	<br/>
-	NUM:<input value="8" onblur="change('num', this.value)"><br/>
-	SIZE:<input value="128" onblur="change('size', this.value)"><br/>
+	NUM:<input value="4" onblur="change('num', this.value)"><br/>
+	SIZE:<input value="64" onblur="change('size', this.value)"><br/>
 	MIN:<input value="2" onblur="change('min', this.value)"><br/>
 	CLEAN:<input name="clean" type="radio" id="con" onclick="change('canClean', true)"/>
 	<label for="ccon">ON</label>
@@ -15,22 +17,38 @@
 	<label for="coff">OFF</label><br/>
 	<button onclick="build()">build</button><br/>
 	<textarea id="newurl" rows="5" cols="50"></textarea><br/>
-	<button onclick="save('svg')">.svg</button><button onclick="save('png')">.png</button><br/>
+	<button onclick="save('svg')">.svg</button><button onclick="save('jpg')">.jpg</button><button onclick="save('png')">.png</button><button onclick="save('gif')">.gif</button><br/>
 </body>
 <script type="text/javascript">
 	var x = document.getElementById('gxr');
+	var u = document.getElementById('file');
 	var n = document.getElementById('newurl');
 	var p;
 	x.onload = function(){
 		p = x.pixelate();
 		p.loadPixelate();
 	}
+
+	upload = function (){
+		var file = u.files[0];
+		if(file == undefined) return false;
+		var fr = new FileReader();
+		var img = new Image();
+		fr.readAsDataURL(file);
+		fr.onload = function(event){
+			x.src = event.target.result;
+			
+			x.onload = function(){
+				p.destroy();
+				p = x.pixelate();
+			}
+		}
+	}
 	
 	function change(type, value){
 		p[type] = value;
 		if(type != 'canClean'){
 			p.loadPixelate();
-			build();
 		}
 	}
 	
@@ -41,5 +59,21 @@
 	function save(type){
 		p.save(type);
 	}
+	
+	function printthis(msg){
+		console.log(msg);
+	}
+	function doit(fn){
+		console.log(fn);
+		return function(arg){
+			fn(arg);
+		}
+	}
+	
+	var test = {
+		testfn: doit(printthis),
+	}
+	
+	test.testfn('wtf');
 </script>
 </html>

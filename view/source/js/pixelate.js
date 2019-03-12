@@ -1,3 +1,8 @@
+////////////////
+//图片马赛克
+//火子
+//20190111
+//////////////
 var Pixelate = function(imgDom){
 	this.img = imgDom;
 	this.size = 64;
@@ -19,6 +24,7 @@ Pixelate.prototype = {
 		this.tags = [];
 
 		this.svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+		this.svg.setAttribute('id', this.img.id);
 		this.svg.setAttribute('width', this.width);
 		this.svg.setAttribute('height', this.height);
 		this.svg.innerHTML = '<image xlink:href="'+this.src+'" width="'+this.width+'" height="'+this.height+'" />';
@@ -67,7 +73,7 @@ Pixelate.prototype = {
 			rect.setAttribute('y', cy);
 			rect.setAttribute('width', rw);
 			rect.setAttribute('height', rh);
-			rect.setAttribute('style', 'fill:rgb(' + this.data[ci] + ','+this.data[ci+1] + ',' + this.data[ci+2] + ')');
+			rect.setAttribute('style', 'fill:rgba(' + this.data[ci] + ','+this.data[ci+1] + ',' + this.data[ci+2] + ',' + this.data[ci+3] + ')');
 		return rect;
 	},
 
@@ -97,6 +103,7 @@ Pixelate.prototype = {
 	},
 
 	build: function(){
+		if(this.src.indexOf('data:image') == 0) return 'base64 url!';
 		if(this.src.indexOf('#') != -1){
 			this.src = this.src.substring(0, this.src.lastIndexOf('#'));
 		}
@@ -107,7 +114,7 @@ Pixelate.prototype = {
 	},
 
 	save: function(type = 'svg'){
-		if(type == 'png'){
+		if(type != 'svg'){
 			var pix = this;
 			var svg = this.svg.cloneNode(true);
 			 	svg.removeChild(svg.childNodes[0]);
@@ -127,7 +134,7 @@ Pixelate.prototype = {
 				ctx.drawImage(this, 0, 0, this.width, this.height);
 				svgimg.onload = function(){
 					ctx.drawImage(this, 0, 0, this.width, this.height);
-					pix.down('png', can.toDataURL('image/png'));
+					pix.down(type, can.toDataURL('image/'+type));
 				}
 			}
 		}else{
@@ -149,6 +156,9 @@ Pixelate.prototype = {
 		document.body.appendChild(aLink);
 		aLink.click();
 		document.body.removeChild(aLink);
+	},
+	destroy: function(){
+		this.svg.parentNode.replaceChild(this.img, this.svg);
 	}
 }
 

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<link rel="stylesheet" type="text/css" href="/source/css/bootstrap.min.css"/>
+		<script type="text/javascript" src="/source/js/comm.js"></script>
+	</head>
+	<body>
+		<div class="container-fluid">
+			<div class="row-fluid">
+			<div class="span4">
+				<ul>
+					<li>dev:base</li>
+				</ul>
+			</div>
+			<div class="span8">
+				<form class="form-horizontal" name="connForm">
+				    <fieldset>
+					    <div id="legend">
+					        <legend>new connect</legend>
+					    </div>
+					    <div class="control-group">
+				          <!-- Text input-->
+				          <label class="control-label" for="input01">Name</label>
+				          <div class="controls">
+				            <input name="name" type="text" placeholder="connection name" class="input-xlarge">
+				          </div>
+				        </div>
+					
+					    <div class="control-group">
+				          <!-- Text input-->
+				          <label class="control-label" for="input01">Host</label>
+				          <div class="controls">
+				            <input name="host" type="text" placeholder="connection host" class="input-xlarge">
+				          </div>
+				        </div>
+					
+					    <div class="control-group">
+				          <!-- Text input-->
+				          <label class="control-label" for="input01">Port</label>
+				          <div class="controls">
+				            <input name="port" type="text" placeholder="connection port" class="input-xlarge" value="3369">
+				          </div>
+				        </div>
+					
+					    <div class="control-group">
+				          <!-- Prepended checkbox -->
+				          <label class="control-label">password</label>
+				          <div class="controls">
+				            <div class="input-prepend">
+				              <span class="add-on">
+				                <label class="checkbox">
+				                  <input name="is_pass" type="checkbox" onchange="checkPass(this)">
+				                </label>
+				              </span>
+				              <input name="pass" placeholder="your password" type="password" disabled="true">
+				            </div>
+				          </div>
+				        </div>
+				        
+					    <div class="control-group">
+				          <!-- Select Basic -->
+				          <label class="control-label">Select - type</label>
+				          <div class="controls">
+				            <select class="input-xlarge">
+				              <option>Enter</option>
+				              <option>Your</option>
+				              <option>Options</option>
+				              <option>Here!</option>
+				            </select>
+				          </div>
+				        </div>
+					
+					    <div class="control-group">
+				          <div class="controls">
+				            <input class="btn btn-fail" onclick="return saveConn()" value="Save"/>
+				            <button class="btn btn-success" onclick="connect()">Conn</button>
+				          </div>
+				        </div>
+				    </fieldset>
+				</form>
+			</div>
+		</div>
+	</div>
+	</body>
+	<script type="text/javascript">
+		var checkPass = function(check){
+			if(check.checked){
+				document.forms['connForm']['pass'].disabled = false;
+			}else{
+				document.forms['connForm']['pass'].disabled = true;
+			}
+		}
+		
+		var saveConn = function(){
+			var conn = document.forms['connForm'];
+			var name = conn['name'].value;
+			var data = {};
+			data['host'] = conn['host'].value;
+			data['port'] = conn['port'].value;
+			if(conn['is_pass'].checked){
+				data['pass'] = conn['pass'].value;
+			}
+			
+			
+			var list = getCookie('conn_list');
+			list = list == '' ? {} : JSON.parse(list);
+			list[name] = 1;
+			
+			setCookie(name, JSON.stringify(data));
+			setCookie('conn_list', JSON.stringify(list));
+			console.log(data, list);
+			return false;
+		}
+		
+		onload = function(){
+			var list = getCookie('conn_list');
+			if(list != ''){
+				list = JSON.parse(list);
+			}
+		}
+	</script>
+</html>
