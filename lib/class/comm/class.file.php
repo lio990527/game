@@ -1,7 +1,7 @@
 <?php 
 class File{
 	public static function getContent($path, $name){
-		$file = ffopen($path, $name, 'r') or die("open file failure!");
+		$file = ffopen($path, $name, 'a+') or die("open file failure!");
 		while(!feof($file)){
 			$row = fgets($file);
 			if(trim($row)){
