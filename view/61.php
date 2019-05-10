@@ -270,7 +270,7 @@ if(isset($_REQUEST['name']) && !isset($_COOKIE['name'])){
 </body>
 
 <script type="text/javascript">
-	var childs = <?php if(!empty($childs)) echo json_encode($childs);?>;
+	var childs = <?php echo json_encode($childs);?>;
 	$(function(){
 		$('#show_create').click(function(){
 			$('.form_view').hide();
