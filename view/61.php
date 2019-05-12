@@ -189,8 +189,8 @@ if(isset($_REQUEST['name']) && !isset($_COOKIE['name'])){
 		<?php endif;?>
 		<div class="child_view" style="display:<?php echo $_REQUEST['action'] == 'show'?'':'none'; ?>;background-image:url('/source/image/edj.jpg');background-size: auto 100%;background-position-x: -800px;width: 100%;height: 100%;position:absolute;overflow: hidden;top:0;left:0;z-index:999">
 			<div style="background-color:#FFF;width: 100%;height: 100%;position:absolute;overflow: hidden;top:0;left:0;opacity:.6"></div>
-			<form method="post">
 			<div class="form_view add_view" style="position:absolute;top:30em;left:10.5em;">
+				<form method="post">
 				<fieldset style="border-radius:1em;padding:1em;">
 					<legend style="font-size:2em;">添加宝宝</legend>
 					<table style="width: 40em;height:100%;background-color:#FFF;" cellpadding="3">
@@ -214,8 +214,10 @@ if(isset($_REQUEST['name']) && !isset($_COOKIE['name'])){
 						</tr>
 					</table>
 				</fieldset>
+				</form>
 			</div>
-			<div class="form_view update_view" style="position:absolute;top:30em;left:10.5em;">
+			<div class="form_view update_view" style="display:none;position:absolute;top:30em;left:10.5em;">
+				<form method="post">
 				<fieldset style="border-radius:1em;padding:1em;">
 					<legend style="font-size:2em;">修改信息</legend>
 					<table style="width: 40em;height:100%;background-color:#FFF;" cellpadding="3">
@@ -239,8 +241,9 @@ if(isset($_REQUEST['name']) && !isset($_COOKIE['name'])){
 						</tr>
 					</table>
 				</fieldset>
+				</form>
 			</div>
-			<div class="form_view info_view" style="position:absolute;top:30em;left:10.5em;">
+			<div class="form_view info_view" style="display:none;position:absolute;top:30em;left:10.5em;">
 				<fieldset style="border-radius:1em;padding:1em;">
 					<legend style="font-size:2em;">宝宝的信息</legend>
 					<table style="width: 40em;height:100%;background-color:#FFF;" cellpadding="3">
@@ -264,7 +267,6 @@ if(isset($_REQUEST['name']) && !isset($_COOKIE['name'])){
 					</table>
 				</fieldset>
 			</div>
-			</form>
 		</div>
 	</div>
 </body>
