@@ -50,12 +50,38 @@ $mothers = empty($mothers) ? [] : json_decode($mothers, true);
 
 if(isset($_COOKIE['name'])){
 	$mother = $mothers[$_COOKIE['name']];
-	
+
 	$cfile = 'childs.json';
 	$childs = File::getContent($path, $cfile);
 	$childs = empty($childs) ? [] : json_decode($childs, true);
 
+	if ($_GET['do'] == 'assign') {
+		$mothers = array_filter($mothers, function($m){
+			return $m['times'] > 0 ? true : false;
+		});
+		array_multisort(array_combine(array_keys($mothers), array_column($mothers, 'times')), SORT_DESC, $mothers);
+		$childs = array_keys($childs);
+		foreach ($mothers as $mn => $mm){
+			$baobao = array_rand(array_flip(array_diff($childs, $mm['childs'])), $mm['times']);
+			$baobao = is_array($baobao) ? $baobao : [$baobao];
+			if (empty($baobao)) {
+				die('error try again!');
+			}
+			$childs = array_values(array_diff($childs, $baobao));
+			$mothers[$mn]['baobaos'] = $baobao;
+		}
+		File::writeFile($path, $file, json_encode($mothers), true);
+		die('success');
+	}
 	if (! empty($_POST)) {
+		if (! empty($_POST['do'])) {
+			if ($_POST['do'] == 'times') {
+				$mothers[$_COOKIE['name']]['times'] -= 1;
+				File::writeFile($path, $file, json_encode($mothers), true);
+				header("Location:{$_SERVER['REQUEST_URI']}");
+			}
+		}
+
 		if(empty($_POST['child'])){
 			echo '<script>alert("请输入宝宝的姓名");</script>';
 			$_REQUEST['action'] = 'show';
@@ -68,7 +94,8 @@ if(isset($_COOKIE['name'])){
 				'address' => $_POST['address'],
 				'mother' => $_COOKIE['name'],
 			];
-			if($_POST['method'] === 'add'){
+
+			if (! array_key_exists($_POST['child'], $childs)) {
 				$mother['childs'][] = $_POST['child'];
 				$mother['times'] = isset($mother['times']) ? $mother['times'] + 1 : 1;
 				$mothers[$_COOKIE['name']] = $mother;
@@ -80,6 +107,7 @@ if(isset($_COOKIE['name'])){
 			header("Location:{$_SERVER['REQUEST_URI']}");
 		}
 	}
+
 }
 if(isset($_REQUEST['name']) && !isset($_COOKIE['name'])){
 	$name = $_REQUEST['name'];
@@ -162,25 +190,29 @@ if(isset($_REQUEST['name']) && !isset($_COOKIE['name'])){
 						</ul>
 					</p>
 				</div>
-				<div style="display:none;">
+				<div style="display:;">
+					<?php if($mother['times'] > 0):?>
 					<p style="text-align:left;font-size:3em;">
-						<button style="font-size:.5em;background-color: #96aaf1;width: 5em;height: 2em;border-radius: 50px;">+</button>
+						<button style="font-size:.5em;background-color: #96aaf1;width: 5em;height: 2em;border-radius: 50px;" onclick="show_cj()">+</button>
 						<span style="font-size:.5em;color:#666;">点击抽取赠送礼物的宝宝(别人的)</span>
 					</p>
+					<?php endif;?>
+					<?php if(count($mother['baobaos']) - $mother['times'] > 0):?>
+					<p>
+						<hr/>
+						<span style="font-size:1.5em;color:#666;">即将收到你的礼物的宝宝</span>
+					</p>
+					<?php endif;?>
 					<p style="text-align:left;font-size:3em;">
 						<ul style="font-size:2em;margin:.5em;padding-left:3.5em;">
-							<li>
-								<label style="float: left;width:3em;text-overflow:ellipsis;overflow: hidden;white-space: nowrap;">琪琪</label>
-								<button style="font-size:.7em;background-color: #96aaf1;width:5em;height: 2em;border-radius: 50px;margin-left:5em;" onclick="view_child('琪琪')">查看&gt;</button>
-							</li>
-							<?php if(isset($mother['baobaos'])):?>
-							<?php foreach ($mother['baobaos'] as $baoName):?>
+							<?php foreach ($mother['baobaos'] as $k => $baoName):?>
+							<?php if(count($mother['baobaos']) - $k - $mother['times'] > 0):?>
 							<li>
 								<label style="float: left;width:3em;text-overflow:ellipsis;overflow: hidden;white-space: nowrap;"><?php echo $baoName;?></label>
 								<button style="font-size:.7em;background-color: #96aaf1;width:5em;height: 2em;border-radius: 50px;margin-left:5em;" onclick="view_child('<?php echo $baoName;?>')">查看&gt;</button>
 							</li>
-							<?php endforeach;?>
 							<?php endif;?>
+							<?php endforeach;?>
 						</ul>
 					</p>
 				</div>
@@ -268,6 +300,25 @@ if(isset($_REQUEST['name']) && !isset($_COOKIE['name'])){
 				</fieldset>
 			</div>
 		</div>
+		<div class="cj_view" style="display:none;background-color:#000;width: 100%;height: 100%;position:absolute;overflow: hidden;top:0;left:0;z-index:999">
+			<div style="top: 25%; left:20%;position:absolute;">
+				<div class="lg-trailer" style="">
+					<img class="lg-component-img" src="/source/image/snow.png" style="width:35em;height:auto;">
+				</div>
+				<div class="lg-trailer" style="top: 10.7em; left: 4.4em;width:26.2em;height:14.3em;background-color:#333;">
+					<div class="lg-trailer" style="left:.1em;top:5em;width:26em;text-align: center;height:5em;overflow:hidden;background-color:#FFF;">
+						<p class="cj_begin" style="font-size:3em;"> -点击摇杆开始- </p>
+						<ul class="child_list" style="margin:0;padding:0;font-size:3em;margin-top:2em;"></ul>
+					</div>
+				</div>
+				<div class="lg-trailer" style="top:11em; left: 35.2em;background-color:#000;">
+					<form method="post">
+						<input type="hidden" name="do" value="times">
+						<button type="button" class="cj_button" style="background-image:url('/source/image/yg.png');width:6em;height:36em;border:0;background-size:6em auto;background-repeat:no-repeat;background-position:bottom;background-color:#000;" onclick="choujiang(this)">&nbsp;</button>
+					</form>
+				</div>
+			</div>
+		</div>
 	</div>
 </body>
 
@@ -307,6 +358,49 @@ if(isset($_REQUEST['name']) && !isset($_COOKIE['name'])){
 			$('.update_view textarea[name=address]').val(childs[child].address);
 			$('.child_view').fadeIn();
 		}
+	}
+
+	function show_cj(){
+		$('.cj_view').fadeIn();
+	}
+	
+	function choujiang(btn){
+		var childs = <?php echo json_encode($childs);?>;
+		var child = '<?php echo $mother['baobaos'][count($mother['baobaos']) - $mother['times']];?>';
+		var list = $('.child_list');
+		for(var c in childs){
+			list.append('<li>'+c+'</li>');
+		}
+
+		$('.cj_button').css('backgroundImage', "url('/source/image/yg2.png')");
+		$('.cj_begin').hide();
+
+		var height = parseInt($('.child_list').css('height'));
+		$('.child_list').css('marginTop', -height+'px');
+
+		var time = 500;
+		var move = setInterval(function() {
+			time = time > 100 ? time - 100 : time;  
+			list.animate({
+				"marginTop": (-height + list.find('li:last').height() * 2) + 'px'
+			}, time, function() {
+				list.css({
+					marginTop: (-height+list.find('li:last').height()) + 'px'
+				}).find("li:last").prependTo(list);
+			});
+		}, 100);
+
+		setTimeout(function() {
+			clearInterval(move);
+			$('.cj_button').css('backgroundImage', "url('/source/image/yg.png')");
+			setTimeout(function() {
+				list.find("li:last").text(child);
+				setTimeout(function() {
+					alert('恭喜你抽中的宝宝为['+child+']~');
+					btn.form.submit();
+				}, 500);
+			}, 1000);
+		}, 5000);
 	}
 </script>
 </html>
