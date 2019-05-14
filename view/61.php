@@ -400,7 +400,7 @@ if(isset($_REQUEST['name']) && !isset($_COOKIE['name'])){
 					btn.form.submit();
 				}, 500);
 			}, 1000);
-		}, 5000);
+		}, 3000);
 	}
 </script>
 </html>
