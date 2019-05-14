@@ -372,7 +372,7 @@ if(isset($_REQUEST['name']) && !isset($_COOKIE['name'])){
 			list.append('<li>'+c+'</li>');
 		}
 
-		$('.cj_button').css('backgroundImage', "url('/source/image/yg2.png')");
+		$('.cj_button').attr('disabled', true).css('backgroundImage', "url('/source/image/yg2.png')");
 		$('.cj_begin').hide();
 
 		var height = parseInt($('.child_list').css('height'));
@@ -398,7 +398,6 @@ if(isset($_REQUEST['name']) && !isset($_COOKIE['name'])){
 				"marginTop": (-height + list.find('li:last').height() * 2) + 'px'
 			}, 1000,function(){
 				alert('恭喜你抽中的宝宝为['+child+']~');
-				btn.form.submit();
 			});
 		}, 3000);
 	}
