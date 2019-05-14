@@ -398,6 +398,7 @@ if(isset($_REQUEST['name']) && !isset($_COOKIE['name'])){
 				"marginTop": (-height + list.find('li:last').height() * 2) + 'px'
 			}, 1000,function(){
 				alert('恭喜你抽中的宝宝为['+child+']~');
+				btn.form.submit();
 			});
 		}, 3000);
 	}
