@@ -393,13 +393,13 @@ if(isset($_REQUEST['name']) && !isset($_COOKIE['name'])){
 		setTimeout(function() {
 			clearInterval(move);
 			$('.cj_button').css('backgroundImage', "url('/source/image/yg.png')");
-			setTimeout(function() {
-				list.find("li:last").text(child);
-				setTimeout(function() {
-					alert('恭喜你抽中的宝宝为['+child+']~');
-					btn.form.submit();
-				}, 500);
-			}, 1000);
+			list.find("li:last").text(child);
+			list.animate({
+				"marginTop": (-height + list.find('li:last').height() * 2) + 'px'
+			}, 1000,function(){
+				alert('恭喜你抽中的宝宝为['+child+']~');
+				btn.form.submit();
+			});
 		}, 3000);
 	}
 </script>
