@@ -232,7 +232,7 @@ if(isset($_REQUEST['name']) && !isset($_COOKIE['name'])){
 						</tr>
 						<tr>
 							<td style="text-align:right;"><label style="font-size:2em;">期望的玩具:</label></td>
-							<td><input name="expect" value="<?php echo $_POST['expect'];?>" class="lg-component-input" placeholder="-期待的礼物-" style="display:inline-block;width: 10em;height: 1.5em;line-height: 1em;font-size: 1.8em;background: white;border-radius: 5px;border-width: 1px;border-color: rgb(206, 212, 218);"></td>	
+							<td><textarea name="expect" rows="3" placeholder="-期待的礼物-" style="width:100%;font-size: 2em;background: white;border-radius: 5px;border-width: 1px;"><?php echo $_POST['expect'];?></textarea></td>	
 						</tr>
 						<tr>
 							<td style="text-align:right;vertical-align:top;"><label style="font-size:2em;">邮寄地址:</label></td>
@@ -259,7 +259,7 @@ if(isset($_REQUEST['name']) && !isset($_COOKIE['name'])){
 						</tr>
 						<tr>
 							<td style="text-align:right;"><label style="font-size:2em;">期望的玩具:</label></td>
-							<td><input name="expect" class="lg-component-input" placeholder="-期待的礼物-" style="display:inline-block;width: 10em;height: 1.5em;line-height: 1em;font-size: 1.8em;background: white;border-radius: 5px;border-width: 1px;border-color: rgb(206, 212, 218);"></td>	
+							<td><textarea name="expect" rows="3" placeholder="-期待的礼物-" style="width:100%;font-size: 2em;background: white;border-radius: 5px;border-width: 1px;"></textarea></td>	
 						</tr>
 						<tr>
 							<td style="text-align:right;vertical-align:top;"><label style="font-size:2em;">邮寄地址:</label></td>
@@ -354,7 +354,7 @@ if(isset($_REQUEST['name']) && !isset($_COOKIE['name'])){
 			$('.update_view').show();
 			$('.update_view label.child').text(child);
 			$('.update_view input[name=child]').val(child);
-			$('.update_view input[name=expect]').val(childs[child].expect);
+			$('.update_view textarea[name=expect]').val(childs[child].expect);
 			$('.update_view textarea[name=address]').val(childs[child].address);
 			$('.child_view').fadeIn();
 		}
