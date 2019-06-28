@@ -23,7 +23,7 @@ if ($_POST['menuName'] && $_POST['menuUrl'] && $_POST['todo'] !== null) {
 		$_POST['menuPublic']
 	];
 
-	$info = implode('|', $data) . "\n";
+	$info = implode('|', $data);
 	if ($_POST['todo'] === 'upd') {
 		$menu = File::getFileInfo('../lib/conf', 'menu.conf');
 		$menu[$_GET['chg']] = $info;

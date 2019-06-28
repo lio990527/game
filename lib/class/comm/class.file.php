@@ -69,7 +69,7 @@ class File{
 	public static function writeFile($path, $name, $info, $clear = false){
 		$type = ($clear === true) ? 'w' : 'a';
 		$file = ffopen($path, $name, $type) or die("open file failure!");
-		if(!fwrite($file, $info)){
+		if(!fwrite($file, $info . "\n")){
 			die('File write fail...');
 		}
 		fclose($file);
