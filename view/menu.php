@@ -1,4 +1,10 @@
 <?php
+define('_WWW_ROOT' , dirname(dirname(__FILE__)));
+define('_PATH_SEPARATOR', preg_match("/WIN/i",PHP_OS) ? ";" : ":");
+define('_VIEW_PATH', _WWW_ROOT.'/view/');
+define('SCRIPT_ROOT',dirname(__FILE__).'/');
+ini_set("include_path", "."._PATH_SEPARATOR._WWW_ROOT.'/lib/');
+
 require_once 'class/comm/class.file.php';
 require_once 'class/user/class.user.php';
 
@@ -60,7 +66,7 @@ if(false){
 	foreach ($rows as $r_k => $r_v){
 		$row = explode('|', trim($r_v));
 
-		if(!$row[6] && $row['4'] != $strUips){
+		if($row[6] === '0' && $row['4'] != $strUips){
 			continue;
 		}
 
@@ -83,7 +89,7 @@ if(false){
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 	<title>网盟菜单</title>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 	<link rel="stylesheet" type="text/css" href="source/css/menu.css"/>
 	<script type="text/javascript" src="source/js/jquery-1.7.2.min.js"></script>
 	<script type="text/javascript" src="source/js/comm.js"></script>
