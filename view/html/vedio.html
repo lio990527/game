@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>vedio</title>
+<script type="text/javascript">
+	var uploadVideo = function(file){
+
+		var file = file.files[0];
+		var url = window.URL.createObjectURL(file);
+		var video = document.createElement('video');
+			video.src = url;
+			video.id = 'vvvv';
+			video.muted = 'muted';
+			video.currentTime = 0.5;
+			video.style.display = 'none';
+			document.body.appendChild(video);
+			video.oncanplay = function(){
+				var rate = 0.5;
+				var canvas = document.createElement('canvas');
+					canvas.width = this.videoWidth * rate;
+					canvas.height = this.videoHeight * rate;
+					canvas.getContext('2d').drawImage(this, 0 , 0, canvas.width, canvas.height);
+				img = document.createElement('img');
+				img.src = canvas.toDataURL('image/jpeg');
+				document.body.appendChild(img);
+			}
+	}
+</script>
+</head>
+<body>
+
+	<form method="post">
+		<input type="file" onchange="uploadVideo(this)">
+		<input value="上传" onclick="" type="button">
+	</form>
+</body>
+</html>
