@@ -77,91 +77,99 @@ function digui($arr){
 	return $mes;
 }
 ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+
+<!DOCTYPE html>
+<html lang="zh">
 <head>
 <title>encode/decode</title>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<link rel="stylesheet" type="text/css" href="source/css/menu.css"/>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<link rel="stylesheet" type="text/css" href="/source/css/menu.css"/>
+
 <head>
 	<style type="text/css">
-       body{margin:0; padding:0;font-size:14px;
-        	color:#444;
-        	font-family:Courier New;
-        	word-wrap:break-word;
-        	border:0;
-  			resize: none;
-       }
-       #code{
-			width:calc(100%-30px);
-			height:100%;
-			border:0px solid;
-			font-family:Courier New;
-			line-height:152%;
-			word-wrap:break-word;
-			padding:20px;
-		}
-		label{
-			padding: 2px 2px;
-    		color: #d14;
-    		background-color: #f7f7f9;
-    		border: 1px solid #e1e1e8;
-    		line-height: 25px;
-    		font-family: Menlo,Monaco,Consolas,"Courier New",monospace;
-    		font-size: 12px;
-    		border-radius: 3px;
-		}
-		.toolbox {
-			font-family: sans-serif;
-			font-size: 13px;
-			background-color:#d2d2f6;
-			position:fixed;
-			right:0px;
-			top:0px;
-			border-width:0;
-			border-bottom-width:1px #c2c2c2 solid;
-			border-left-width:1px #c2c2c2 solid;
-			border-bottom-left-radius:4px;
-			padding:2px;
-			transition: opacity .2s ease-out;
-			-webkit-transition: opacity .2s ease-out;
-			cursor: default;
-			user-select: none;
-			-webkit-user-select: none;
-			padding-left: 2px;
-		}
-		.status {
-			position: fixed;
-			right: 0px;
-			bottom: 0px;
-			height: 16px;
-			border-width: 1px;
-			border-bottom-width: 0px;
-			border-right-width: 0px;
-			border-color: #c2c2c2;
-			border-style: solid;
-			border-top-left-radius: 4px;
-    		opacity: 0;
-			padding: 2px 7px 2px 4px;
-			font-family: sans-serif;
-			font-size: 12px;
-			background-color: #d2d2f6;
-			color: #696969;
-			text-align: right;
-			transition: opacity .2s ease-out;	
-			-webkit-transition: opacity .2s ease-out;
-			user-select: none;
-			-webkit-user-select: none;
-		}
-		.status:not(:empty ) {
-    		opacity: 1;
-		}
-    </style>
-    <script type="text/javascript">
-    	$ = function(id){
-        	return document.getElementById(id);
-        }
-    </script>
+	body {
+		margin: 0;
+		padding: 0;
+		font-size: 14px;
+		color: #444;
+		font-family: Courier New;
+		word-wrap: break-word;
+		border: 0;
+		resize: none;
+	}
+	
+	#code {
+		width: calc(100% -30px);
+		height: 100%;
+		border: 0px solid;
+		font-family: Courier New;
+		line-height: 152%;
+		word-wrap: break-word;
+		padding: 20px;
+	}
+	
+	label {
+		padding: 2px 2px;
+		color: #d14;
+		background-color: #f7f7f9;
+		border: 1px solid #e1e1e8;
+		line-height: 25px;
+		font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
+		font-size: 12px;
+		border-radius: 3px;
+	}
+	
+	.toolbox {
+		font-family: sans-serif;
+		font-size: 13px;
+		background-color: #d2d2f6;
+		position: fixed;
+		right: 0px;
+		top: 0px;
+		border-width: 0;
+		border-bottom-width: 1px #c2c2c2 solid;
+		border-left-width: 1px #c2c2c2 solid;
+		border-bottom-left-radius: 4px;
+		padding: 2px;
+		transition: opacity .2s ease-out;
+		-webkit-transition: opacity .2s ease-out;
+		cursor: default;
+		user-select: none;
+		-webkit-user-select: none;
+		padding-left: 2px;
+	}
+	
+	.status {
+		position: fixed;
+		right: 0px;
+		bottom: 0px;
+		height: 16px;
+		border-width: 1px;
+		border-bottom-width: 0px;
+		border-right-width: 0px;
+		border-color: #c2c2c2;
+		border-style: solid;
+		border-top-left-radius: 4px;
+		opacity: 0;
+		padding: 2px 7px 2px 4px;
+		font-family: sans-serif;
+		font-size: 12px;
+		background-color: #d2d2f6;
+		color: #696969;
+		text-align: right;
+		transition: opacity .2s ease-out;
+		-webkit-transition: opacity .2s ease-out;
+		user-select: none;
+		-webkit-user-select: none;
+	}
+	.status:not(:empty){opacity:1;}
+</style>
+
+<script type="text/javascript">
+	$ = function(id){
+		return document.getElementById(id);
+	}
+</script>
 </head>
 </head>
 <body>
@@ -170,20 +178,20 @@ function digui($arr){
 	</div>
 	<div class="toolbox">
 		<form name="form0" method="post">
-		<textarea name="input" style="display:none;"><?php echo $strInput;?></textarea>
-		<ul id="decodeType" style="display:inline;list-style:none;display:none;padding:2px;">
-			<li><input type="radio" name="func" value="json_decode" onchange="document.form0.submit()" <?php if($strFunc=='json_decode')echo "checked";?>>json_decode</li>
-			<li><input type="radio" name="func" value="json_encode" onchange="document.form0.submit()" <?php if($strFunc=='json_encode')echo "checked";?>>json_encode</li>
-			<li><input type="radio" name="func" value="base64_decode" onchange="document.form0.submit()" <?php if($strFunc=='base64_decode')echo "checked";?>>base64_decode</li>
-			<li><input type="radio" name="func" value="base64_encode" onchange="document.form0.submit()" <?php if($strFunc=='base64_encode')echo "checked";?>>base64_encode</li>
-			<li><input type="radio" name="func" value="unserialize" onchange="document.form0.submit()" <?php if($strFunc=='unserialize')echo "checked";?>>unserialize</li>
-			<li><input type="radio" name="func" value="serialize" onchange="document.form0.submit()" <?php if($strFunc=='serialize')echo "checked";?>>serialize</li>
-			<li><input type="radio" name="func" value="urldecode" onchange="document.form0.submit()" <?php if($strFunc=='urldecode')echo "checked";?>>urldecode</li>
-			<li><input type="radio" name="func" value="urlencode" onchange="document.form0.submit()" <?php if($strFunc=='urlencode')echo "checked";?>>urlencode</li>
-			<li><input type="radio" name="func" value="xmlToArray" onchange="document.form0.submit()" <?php if($strFunc=='xmlToArray')echo "checked";?>>xmlToArray</li>
-			<li><input type="radio" name="func" value="md5" onchange="document.form0.submit()" <?php if($strFunc=='md5')echo "checked";?>>md5</li>
-		</ul>
-		<span class="btn btn_opt" title="设置" style="float:right;" onclick="$('decodeType').style.display=($('decodeType').style.display=='none')?'inline-block':'none';">&nbsp;</span>
+			<textarea name="input" style="display:none;"><?php echo $strInput;?></textarea>
+			<ul id="decodeType" style="display:inline;list-style:none;display:none;padding:2px;">
+				<li><input type="radio" name="func" value="json_decode" onchange="document.form0.submit()" <?php if($strFunc=='json_decode')echo "checked";?>>json_decode</li>
+				<li><input type="radio" name="func" value="json_encode" onchange="document.form0.submit()" <?php if($strFunc=='json_encode')echo "checked";?>>json_encode</li>
+				<li><input type="radio" name="func" value="base64_decode" onchange="document.form0.submit()" <?php if($strFunc=='base64_decode')echo "checked";?>>base64_decode</li>
+				<li><input type="radio" name="func" value="base64_encode" onchange="document.form0.submit()" <?php if($strFunc=='base64_encode')echo "checked";?>>base64_encode</li>
+				<li><input type="radio" name="func" value="unserialize" onchange="document.form0.submit()" <?php if($strFunc=='unserialize')echo "checked";?>>unserialize</li>
+				<li><input type="radio" name="func" value="serialize" onchange="document.form0.submit()" <?php if($strFunc=='serialize')echo "checked";?>>serialize</li>
+				<li><input type="radio" name="func" value="urldecode" onchange="document.form0.submit()" <?php if($strFunc=='urldecode')echo "checked";?>>urldecode</li>
+				<li><input type="radio" name="func" value="urlencode" onchange="document.form0.submit()" <?php if($strFunc=='urlencode')echo "checked";?>>urlencode</li>
+				<li><input type="radio" name="func" value="xmlToArray" onchange="document.form0.submit()" <?php if($strFunc=='xmlToArray')echo "checked";?>>xmlToArray</li>
+				<li><input type="radio" name="func" value="md5" onchange="document.form0.submit()" <?php if($strFunc=='md5')echo "checked";?>>md5</li>
+			</ul>
+			<span class="btn btn_opt" title="设置" style="float:right;" onclick="$('decodeType').style.display=($('decodeType').style.display=='none')?'inline-block':'none';">&nbsp;</span>
 		</form>
 	</div>
 	<div class="status"><?php echo $strFunc;?></div>
