@@ -1,5 +1,4 @@
 <?php
-
 define('_WWW_ROOT', dirname(dirname(__FILE__)));
 define('_PATH_SEPARATOR', preg_match('/$WIN/i', PHP_OS) ? ";" : ":");
 define('_VIEW_PATH', _WWW_ROOT . '/view/');
@@ -68,7 +67,7 @@ if (true) {
 <html lang="zh">
 <head>
 <title>网盟菜单</title>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta charset="utf-8">
 <link rel="stylesheet" type="text/css" href="source/css/menu.css" />
 <script type="text/javascript" src="source/js/jquery-1.7.2.min.js"></script>
 <script type="text/javascript" src="source/js/comm.js"></script>
@@ -128,6 +127,12 @@ if (true) {
 	}
 
 	onload = function(){
+		$.get('/randbg.php', function(data){
+			if(data !== ''){
+				$('body').css('background', 'url(' + data + ')');
+			}
+		});
+
 		$('img[name=menu_ico]').each(function(){
 			this.src = $(this).attr('data');
 		});
@@ -196,26 +201,28 @@ if (true) {
 			<span class="btn btn_mng" title="管理" onclick="mnag()">+</span> 
 			<span class="btn btn_add" title="新建" onclick="hidn()">+</span>
 		</div>
-		<?php foreach($menu as $type => $val):?>
-		<div class="line">
-				<div class="type"><?php echo $type;?></div>
-				<div class="menu">
-				<?php foreach($val as $v):?>
-				<ul>
-					<a href="<?php echo $v[1]?>" target="<?php if($v[5] == 1)echo '_blank';?>">
-						<img name="menu_ico" width="16" height="16" data="<?php echo $v['ico']?>" />
-					</a>
-					<li><a href="<?php echo $v[1]?>" title="<?php echo $v[0]?>" style="color:#<?php echo $v[2]?>" target="<?php if($v[5]) echo '_blank';?>"><?php echo $v[0]?></a></li>
-					<span class="btn edit" key="<?php echo $v['id'];?>">+</span>
-					<span class="btn delet" key="<?php echo $v['id'];?>">+</span>
-				</ul>
-				<?php endforeach;?>
+		<div class="content">
+			<?php foreach($menu as $type => $val):?>
+			<div class="line">
+					<div class="type"><?php echo $type;?></div>
+					<div class="menu">
+					<?php foreach($val as $v):?>
+					<ul>
+						<a href="<?php echo $v[1]?>" target="<?php if($v[5] == 1)echo '_blank';?>">
+							<img name="menu_ico" width="16" height="16" data="<?php echo $v['ico']?>" />
+						</a>
+						<li><a href="<?php echo $v[1]?>" title="<?php echo $v[0]?>" style="color:#<?php echo $v[2]?>" target="<?php if($v[5]) echo '_blank';?>"><?php echo $v[0]?></a></li>
+						<span class="btn edit" key="<?php echo $v['id'];?>">+</span>
+						<span class="btn delet" key="<?php echo $v['id'];?>">+</span>
+					</ul>
+					<?php endforeach;?>
+				</div>
 			</div>
-		</div>
-		<?php endforeach;?>
-		<div class="line">
-			<input id="w_link" onkeydown="Jump()" style="margin: 3px 5px; width: 728px;" />
-			<button onclick="linkBlank()" style="float: right; margin-right: 5px;">猛戳</button>
+			<?php endforeach;?>
+			<div class="line">
+				<input id="w_link" onkeydown="Jump()" style="margin: 3px 5px; width: 728px;" />
+				<button onclick="linkBlank()" style="float: right; margin-right: 5px;">猛戳</button>
+			</div>
 		</div>
 	</div>
 </body>
