@@ -4,7 +4,7 @@ class User
 
 	private $ip = null;
 
-	public function User($ip = '')
+	public function __construct($ip = '')
 	{
 		$this->ip = $ip;
 	}
