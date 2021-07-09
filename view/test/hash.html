@@ -1,0 +1,16 @@
+<script type="text/javascript">
+onload = function(){
+	let size= Math.pow(2, 16)
+    let data = {}
+    let maxKey = 20000 * size
+    for (let key = 0; key <= maxKey; key += size){
+        data[key] = key;
+    }
+    for (let i = 0; i < 1; i++){
+        let xhr = new XMLHttpRequest()
+        xhr.open("POST", "http://api2-local.imxyb.com/api2/test")
+        xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8")
+        xhr.send(JSON.stringify(data))
+    }
+}
+</script>

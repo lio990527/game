@@ -5,13 +5,13 @@ define('PATH', 'E:/image');
 $host = 'http://oss.emugif.com/picture2014/nbc';
 $type = trim($_SERVER["argv"][1]) ? trim($_SERVER["argv"][1]) : 'stage';
 if (true){
-	print_ln(">>ÕıÔÚ×¥È¡Í¼Æ¬");
+	print_ln(">>æ­£åœ¨æŠ“å–å›¾ç‰‡");
 	$url = $host.'/'.$type.'.htm';
 	$objCurl = curl_init($url);
 	curl_setopt($objCurl, CURLOPT_SSL_VERIFYHOST, 1);
 	curl_setopt($objCurl, CURLOPT_REFERER, "http://oss.emugif.com/");
-// 	curl_setopt($objCurl, CURLOPT_HEADER, TRUE);    //±íÊ¾ĞèÒªresponse header
-// 	curl_setopt($objCurl, CURLOPT_NOBODY, false); 	//±íÊ¾ĞèÒªresponse body
+// 	curl_setopt($objCurl, CURLOPT_HEADER, TRUE);    //è¡¨ç¤ºéœ€è¦response header
+// 	curl_setopt($objCurl, CURLOPT_NOBODY, false); 	//è¡¨ç¤ºéœ€è¦response body
 	curl_setopt($objCurl, CURLOPT_HTTPHEADER, array('Host:oss.emugif.com','Referer:'.$url));
 	curl_setopt($objCurl, CURLOPT_USERAGENT, "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/536.11 (KHTML, like Gecko) Chrome/20.0.1132.57 Safari/536.11");
 	curl_setopt($objCurl, CURLOPT_SSL_VERIFYPEER, false);
@@ -21,7 +21,7 @@ if (true){
 // 	var_dump($url,$contents,$statusCode);exit;
 	if($statusCode != 200){
 		var_dump($url,$statusCode);
-		die('×¥È¡Ê§°Ü');
+		die('æŠ“å–å¤±è´¥');
 	}
 	curl_close($objCurl);
 	$strText = substr($contents, stripos($contents, '<head>'), stripos($contents, '</body>')-stripos($contents, '<head>'));
@@ -31,11 +31,11 @@ if (true){
 	preg_match_all($pregReg, $contents, $arrTemp);
 // 	var_dump($strText,$arrTemp[1]);exit;
 	if(empty($arrTemp[1])){
-		die('×¥È¡Ê§°Ü,Î´»ñÈ¡µ½ÈÎºÎĞÅÏ¢');
+		die('æŠ“å–å¤±è´¥,æœªè·å–åˆ°ä»»ä½•ä¿¡æ¯');
 	}
 	$count = count($arrTemp[1]);
 // 	print_r($contents);exit;
-	echo ">>×¥È¡Í¼Æ¬×ÜÊı£º{$count}.\r\n";
+	echo ">>æŠ“å–å›¾ç‰‡æ€»æ•°ï¼š{$count}.\r\n";
 	$arrName = array();
 	foreach ($arrTemp[1] as $k=>$v){
 		$arrName[$v] = "{$type}_{$v}";
@@ -47,11 +47,11 @@ if (true){
 	
 	$fileName = $arrTamp[1] ? trim(str_replace(array('\\','\/',':','*','?','"','<','>','|'),'',$arrTamp[1])) : $type;
 	if(count($arrName)){
-		echo ">>¿ªÊ¼ÏÂÔØÍ¼Æ¬\r\n";
+		echo ">>å¼€å§‹ä¸‹è½½å›¾ç‰‡\r\n";
 		$path = PATH.'/'.$fileName;
 		if(!file_exists($path)){
 			if(!mkdir($path, '0777')){
-				die(">>Ä¿Â¼´´½¨Ê§°Ü\r\n");
+				die(">>ç›®å½•åˆ›å»ºå¤±è´¥\r\n");
 			}
 		}
 		
@@ -60,12 +60,12 @@ if (true){
 			$url = $host.'/'.$img.'.gif';
 			$name = getImage($url,'', $path.'/'.$type);
 			var_dump($url);
- 			print_ln(">>>>>>Í¼Æ¬{$name}ÏÂÔØÍê³É...");
+ 			print_ln(">>>>>>å›¾ç‰‡{$name}ä¸‹è½½å®Œæˆ...");
 // 			fwrite($file,"{$name}\r\n");
 		}
 // 		fclose($file);
 	}
-	print_ln(">>ÏÂÔØÍê³É");exit;
+	print_ln(">>ä¸‹è½½å®Œæˆ");exit;
 }
 die($host);
 
@@ -74,9 +74,9 @@ function print_ln($msg){
 }
 
 /*
- *¹¦ÄÜ£ºphp¶àÖÖ·½Ê½ÍêÃÀÊµÏÖÏÂÔØÔ¶³ÌÍ¼Æ¬±£´æµ½±¾µØ
- *²ÎÊı£ºÎÄ¼şurl,±£´æÎÄ¼şÃû³Æ£¬Ê¹ÓÃµÄÏÂÔØ·½Ê½
- *µ±±£´æÎÄ¼şÃû³ÆÎª¿ÕÊ±ÔòÊ¹ÓÃÔ¶³ÌÎÄ¼şÔ­À´µÄÃû³Æ
+ *åŠŸèƒ½ï¼šphpå¤šç§æ–¹å¼å®Œç¾å®ç°ä¸‹è½½è¿œç¨‹å›¾ç‰‡ä¿å­˜åˆ°æœ¬åœ°
+ *å‚æ•°ï¼šæ–‡ä»¶url,ä¿å­˜æ–‡ä»¶åç§°ï¼Œä½¿ç”¨çš„ä¸‹è½½æ–¹å¼
+ *å½“ä¿å­˜æ–‡ä»¶åç§°ä¸ºç©ºæ—¶åˆ™ä½¿ç”¨è¿œç¨‹æ–‡ä»¶åŸæ¥çš„åç§°
 */
 function getImage($url,$name='', $save_dir, $type=0){
 	if($url==''){
@@ -89,7 +89,7 @@ function getImage($url,$name='', $save_dir, $type=0){
 		}
 		$name=date('ymdHis').rand(100,999).$ext;
 	}
-	//ÎÄ¼ş±£´æÂ·¾¶
+	//æ–‡ä»¶ä¿å­˜è·¯å¾„
 	if($type){
 		$ch=curl_init();
 		$timeout=5;
@@ -105,9 +105,9 @@ function getImage($url,$name='', $save_dir, $type=0){
 		ob_end_clean();
 	}
 	$size=strlen($img);
-	//ÎÄ¼ş´óĞ¡
+	//æ–‡ä»¶å¤§å°
 	if(!file_exists($save_dir) && !mkdir($save_dir,0777, true)){
-		die('ÎÄ¼ş´´½¨Ê§°Ü');
+		die('æ–‡ä»¶åˆ›å»ºå¤±è´¥');
 	}
 	$name = fileExists($save_dir,$name);
 	$file = $save_dir.'/'.$name;

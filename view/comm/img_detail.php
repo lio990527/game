@@ -21,7 +21,7 @@
 			var file  = files[id];
 			document.getElementById('pic').name= id;
 			document.getElementById('pic').alt = file;
-			document.getElementById('pic').src = '/source/image/GIF/gif'+file;
+			document.getElementById('pic').src = '/source/image/' + fild + '/'+file;
 			document.getElementById('w_miao').style.display = 'table';
 			document.getElementById('w_show').style.display = 'block';
 			document.getElementById('w_prev').style.display = (id == 0) ? 'none' : 'block';
@@ -94,19 +94,22 @@
 <div id="w_show" class="shadow" style="display:none;"></div>
 <div id="w_miao" class="miao"   style="display:none;">
     <span><img id="pic" src="/source/image/GIF/gif/2609741_980x1200_0.jpg" /></span>
-	<a class="close" id="w_close" href="javascript:void(0)" title="�ر�"   onclick="closePic()"></a>
-	<a class="prev"  id="w_prev"  href="javascript:void(0)" title="��һ��" onclick="changePic(-1)"></a>
-	<a class="next"  id="w_next"  href="javascript:void(0)" title="��һ��" onclick="changePic(1)"></a>
+	<a class="close" id="w_close" href="javascript:void(0)" title="锟截憋拷"   onclick="closePic()"></a>
+	<a class="prev"  id="w_prev"  href="javascript:void(0)" title="锟斤拷一锟斤拷" onclick="changePic(-1)"></a>
+	<a class="next"  id="w_next"  href="javascript:void(0)" title="锟斤拷一锟斤拷" onclick="changePic(1)"></a>
 </div>
 <?php 
-$fild = 'GIF/gif';
+$fild = 'gif';
 require_once 'class/comm/class.file.php';
-$files = File::pathFileList('E:/PHPworkspace/MyGame/view/source/image/'.$fild);
+$files = File::pathFileList('D:/workspace/game/public/source/image/'.$fild);
 echo '<div style="margin:0 auto;width:800px;border:1px solid;">';
 foreach ($files as $k=>$file){
 	echo '<img id="'.$k.'" width="auto" src="/source/image/'.$fild.'/'.$file.'" style="width:100px;" border="1" onclick="openPic(this.id)"/>';
 }
-$fileArray = "<script>var files = ['".join("','",$files)."'];</script>";
+$fileArray = "<script>
+var fild = '{$fild}';
+var files = ['".join("','",$files)."'];
+</script>";
 
 echo '</div>'.$fileArray;
 ?>

@@ -16,7 +16,7 @@ if($_FILES){
 			$file = 'source/upload/'.$_FILES['file']['name'];
 		}
 	}else{
-		$error = 'Ö»Ö§³Öcsv¸ñÊ½...';
+		$error = 'åªæ”¯æŒcsvæ ¼å¼...';
 	}
 }
 
@@ -34,7 +34,7 @@ if($_POST['path'] && $_POST['num']){
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=gbk">
-<title>XLSÎÄ¼ş·Ö¸î</title>
+<title>XLSæ–‡ä»¶åˆ†å‰²</title>
 <script type="text/javascript" src="/source/js/jquery-1.7.2.min.js"></script>
 </head>
 <script type="text/javascript">
@@ -49,22 +49,22 @@ if($_POST['path'] && $_POST['num']){
 </script>
 <body>
 <div style="width:50%; margin:0 auto;padding:5px 5px;border:1px solid">
-	<h2 align="center">XLS ·Ö¸î</h2>
+	<h2 align="center">XLS åˆ†å‰²</h2>
 	<?php if (!$file){?>
 	<form method="post" enctype="multipart/form-data">
-		ÎÄ¼ş:<input type="file" name="file"/>
-		<input type="submit" value="Ìá½»"/><label style="color:red;"><?php echo $error?></label>
+		æ–‡ä»¶:<input type="file" name="file"/>
+		<input type="submit" value="æäº¤"/><label style="color:red;"><?php echo $error?></label>
 	</form>
 	<?php }else{?>
-	<form method="post" onsubmit="if(!parseInt(this.num.value) > 0){alert('ÌõÊı±ØĞë´óÓÚ0');return false;}">
-		<input type="button" value="ÖØÑ¡" onclick="location.href=location.href"/>
-		<label>ÎÄ¼ş£º</label>
+	<form method="post" onsubmit="if(!parseInt(this.num.value) > 0){alert('æ¡æ•°å¿…é¡»å¤§äº0');return false;}">
+		<input type="button" value="é‡é€‰" onclick="location.href=location.href"/>
+		<label>æ–‡ä»¶ï¼š</label>
 		<input name="file" value="<?php echo $_FILES['file']['name'];?>" title="<?php echo $_FILES['file']['name'];?>" style="border:0;" readonly="readonly"/>
 		<input type="hidden" name="path" value="<?php echo $file?>"/>
-		<label>Ã¿Ò³ÌõÊı£º</label>
+		<label>æ¯é¡µæ¡æ•°ï¼š</label>
 		<input name="num" size="2" onblur="if(parseInt(this.value) > 0)getPage(this.form.path.value,this.value)"/>
-		<input type="submit" value="Éú³É"/>
-		<input type="button" value="Ô¤ÀÀ"/>
+		<input type="submit" value="ç”Ÿæˆ"/>
+		<input type="button" value="é¢„è§ˆ"/>
 	</form>
 	<?php }?>
 </div>

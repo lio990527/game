@@ -1,54 +1,54 @@
 <?php
-// ²âÊÔÎÄµµ
+// ï¿½ï¿½ï¿½ï¿½ï¿½Äµï¿½
 
 require_once 'class/comm/Excel/reader.php';
 
-// ExcelÎÄ¼þ($filename, $encoding);
+// Excelï¿½Ä¼ï¿½($filename, $encoding);
 $data = new Spreadsheet_Excel_Reader();
 
 
-// ÉèÖÃÊäÈë±àÂë UTF-8/GB2312/CP936µÈµÈ
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ UTF-8/GB2312/CP936ï¿½Èµï¿½
 $data->setOutputEncoding('UTF-8'); 
 
 /***
-* Èç¹û·þÎñÆ÷²»Ö§³Ö iconv Ìí¼ÓÏÂÃæµÄ´úÂëÊ¹ÓÃ mb_convert_encoding ±àÂë
+* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö§ï¿½ï¿½ iconv ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä´ï¿½ï¿½ï¿½Ê¹ï¿½ï¿½ mb_convert_encoding ï¿½ï¿½ï¿½ï¿½
 * $data->setUTFEncoder('mb');
 *
 **/
 
 /***
-* Ä¬ÈÏÇé¿öÏÂÐÐºÍÁÐµÄ¼¼Êõ´Ó1¿ªÊ¼
-* Èç¹ûÒªÐÞ¸ÄÆðÊ¼ÊýÖµ£¬Ìí¼Ó£º
+* Ä¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ðºï¿½ï¿½ÐµÄ¼ï¿½ï¿½ï¿½ï¿½ï¿½1ï¿½ï¿½Ê¼
+* ï¿½ï¿½ï¿½Òªï¿½Þ¸ï¿½ï¿½ï¿½Ê¼ï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½Ó£ï¿½
 * $data->setRowColOffset(0);
 *
 **/
 
 
 /***
-*  ÉèÖÃ¹¤×÷Ä£Ê½
+*  ï¿½ï¿½ï¿½Ã¹ï¿½ï¿½ï¿½Ä£Ê½
 * $data->setDefaultFormat('%.2f');
-* setDefaultFormat - ×î´ó¼æÈÝÄ£Ê½
+* setDefaultFormat - ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä£Ê½
 *
 * $data->setColumnFormat(4, '%.3f');
-* setColumnFormat - ÁÐµÄ¸ñÊ½ÉèÖÃ£¨½öÊÊÓÃÓÚÊý×Ö×Ö¶Î£©
+* setColumnFormat - ï¿½ÐµÄ¸ï¿½Ê½ï¿½ï¿½ï¿½Ã£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¶Î£ï¿½
 *
 **/
 
 // $data->read('jxlrwtest.xls');
-$data->read('source/upload/tttt.xls');
+$data->read('source/upload/abc.xls');
 
 /*
 
 
- $data->sheets[0]['numRows'] - ÐÐÊý
- $data->sheets[0]['numCols'] - ÁÐÊý
- $data->sheets[0]['cells'][$i][$j] - ÐÐ$i ÁÐ$jÀïµÄÊý¾Ý
+ $data->sheets[0]['numRows'] - ï¿½ï¿½ï¿½ï¿½
+ $data->sheets[0]['numCols'] - ï¿½ï¿½ï¿½ï¿½
+ $data->sheets[0]['cells'][$i][$j] - ï¿½ï¿½$i ï¿½ï¿½$jï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
- $data->sheets[0]['cellsInfo'][$i][$j] - ÎÄ¼þµÄÍØÕ¹ÐÅÏ¢
+ $data->sheets[0]['cellsInfo'][$i][$j] - ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½Õ¹ï¿½ï¿½Ï¢
     
     $data->sheets[0]['cellsInfo'][$i][$j]['type'] = "date" | "number" | "unknown"
-    	µ±typeÎªunknownÊ±Ê¹ÓÃrawÖµ£¬ÒòÎªÔªËØÖÐ°üº¬'0.00'µÄ¸ñÊ½¡£
-    $data->sheets[0]['cellsInfo'][$i][$j]['raw'] = Î´±»¸ñÊ½»¯µÄÖµ
+    	ï¿½ï¿½typeÎªunknownÊ±Ê¹ï¿½ï¿½rawÖµï¿½ï¿½ï¿½ï¿½ÎªÔªï¿½ï¿½ï¿½Ð°ï¿½ï¿½ï¿½'0.00'ï¿½Ä¸ï¿½Ê½ï¿½ï¿½
+    $data->sheets[0]['cellsInfo'][$i][$j]['raw'] = Î´ï¿½ï¿½ï¿½ï¿½Ê½ï¿½ï¿½ï¿½ï¿½Öµ
     $data->sheets[0]['cellsInfo'][$i][$j]['colspan'] 
     $data->sheets[0]['cellsInfo'][$i][$j]['rowspan'] 
 */
@@ -56,7 +56,7 @@ $data->read('source/upload/tttt.xls');
 error_reporting(E_ALL ^ E_NOTICE);
 
 for ($i = 1; $i <= $data->sheets[0]['numRows']; $i++) {
-	var_dump($data->sheets[0]['cells'][$i]);exit;
+// 	var_dump($data->sheets[0]['cells'][$i]);exit;
 	for ($j = 1; $j <= $data->sheets[0]['numCols']; $j++) {
 		echo $data->sheets[0]['cells'][$i][$j]."\t";
 	}

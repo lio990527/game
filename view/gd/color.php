@@ -1,7 +1,7 @@
 <?php 
 $type = isset($_REQUEST['type']) ? $_REQUEST['type'] : 'default';
 
-$img = imagecreatefromgif('http://cdn.jandan.net/wp-content/themes/egg/images/logo-2015.gif');
+$img = imagecreatefromgif('29.png');
 for ($c = 0; $c < imagecolorstotal($img); $c++) {
 	$col = imagecolorsforindex($img, $c);
 	

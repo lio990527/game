@@ -41,6 +41,7 @@ article, body, div, h1, h2, h3, h4, h5, html, p, section {margin: 0;padding: 0;o
 <script type="text/javascript" src="source/js/jquery-1.7.2.min.js"></script>
 </head>
 <?php 
+error_reporting(E_ERROR);
 require '../lib/class/comm/class.file.php';
 $path = '../lib/conf';
 $file = 'mothers.json';
